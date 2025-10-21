@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+	<meta charset="UTF-8">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<!-- FontAwesome para el icono de ojito -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+	<!-- Titulo de la Página -->
+	<link rel="icon" type="image/jpg" th:href="@{/images/iconibero.png}" />
+	<!-- Titulo de la Página -->
+	<title th:text="${titleForm}"></title>
+</head>
+<body>
+	<header th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-light mb-4" style="background-color: cadetblue;">
+			<div class="container">
+				<a class="navbar-brand text-white" th:href="@{/}">INTRANET</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+						<div class="dropdown">
+							<button class="btn dropdown-toggle text-white" type="button" id="dropdownMenu2"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Empleado
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li>
+									<a class="dropdown-item" type="button" aria-current="page" th:href="@{/listar}">Listar</a></li>
+								<li>
+									<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" type="button" aria-current="page" th:href="@{/form}">Nuevo</a></li>
+							</ul>
+						</div>
+						<div class="dropdown">
+							<button class="btn dropdown-toggle text-white" type="button" id="dropdownMenu2"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Usuario
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li><a class="dropdown-item" type="button" aria-current="page"
+										th:href="@{/users/list}">Listar</a></li>
+								<li>
+									<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" type="button" aria-current="page" th:href="@{/users/form}">Nuevo</a>
+								</li>
+							</ul>
+						</div>
+					</ul>
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<a class="nav-link text-light" th:href="@{/users/profileuser}" title="ver perfil de usuario">
+								<ion-icon name="person-outline" style="font-size: 20px;"></ion-icon>
+							</a>
+						</li>
+						<!-- Cerrar sesión -->
+						<li class="nav-item">
+							<form th:action="@{/logout}" method="post" style="display: inline;">
+								<meta name="_csrf" th:content="${_csrf.token}">
+								<meta name="_csrf_header" th:content="${_csrf.headerName}">
+								<button type="submit" class="nav-link text-light"
+									style="background: none; border: none;" title="Cerrar sesión">
+									<ion-icon name="log-out-outline" style="font-size: 25px;"></ion-icon>
+								</button>
+							</form>
+						</li>
+						<!-- FOTO -->
+						<li class="nav-item">
+							<!-- USUARIO INTERNO -->
+							<img 
+								title="Foto del usuario" class="rounded-circle"
+								th:src="@{'/Web_Fotos/' + ${#authentication.principal.userPhoto}}"
+								style="margin-top: 4px;width: 25px;height: 25px;">
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<!-- mensaje error -->
+			<div class="alert alert-danger d-flex align-items-center" role="alert" th:if="${error != null}">
+				<div th:text="${error}"></div>
+				<button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<!-- mensaje info -->
+			<div class="alert alert-info d-flex align-items-center" role="alert" th:if="${info != null}">
+				<div th:text="${info}"></div>
+				<button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<!-- mensaje success -->
+			<div class="alert alert-success d-flex align-items-center" role="alert" th:if="${success != null}">
+				<div th:text="${success}"></div>
+				<button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+	</header>
+	<footer th:fragment="footer">
+		<div class="container" style="height: auto;">
+			<p align="center">
+				<img th:src="@{/images/iconibero.png}" width="20" height="20" alt="Logo el informatico" />
+				Derechos reservados copyright © Informatico Ibero
+			</p>
+		</div>
+		<!-- JS boostrap-->
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<!-- JS SwAlert-->
+		<script th:src="@{/js/sweetalert2@11.js}"></script>
+		<!-- JS Pers-->
+		<script th:src="@{/js/function.js}"></script>
+	</footer>
+
+</body>
+
+</html>

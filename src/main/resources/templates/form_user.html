@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="main/layout.html :: head"></head>
+
+<body>
+	<header th:insert="main/layout.html :: header"></header>
+	<div class="container full-height">
+		<div class="row">
+			<!-- Formulario -->
+			<div class="col-md-6">
+				<div class="card shadow">
+					<div class="card-header">
+						<h1 class="text-center" th:text="${titleForm}"></h1>
+					</div>
+					<div class="card-body">
+						<form th:action="@{/users/create}" th:object="${user}" method="POST" class="px-2">
+							<!-- Lista de empleados -->
+							<div class="form-group row mb-3 justify-content-center">
+								<select class="form-control" th:field="*{employee}" style="border: 2px solid rgb(64, 128, 128);">
+									<option value="0">Seleccione...</option>
+									<option th:each="option: ${empleados}" th:value="${option.id}"
+										th:text="${option.nombre + ' ' + option.apePaterno + ' ' + option.apeMaterno + ' (' + option.documento + ')'}">
+									</option>
+								</select>
+							</div>
+							<!-- Usuario -->
+							<div class="mb-3 row">
+								<label class="col-sm-3 col-form-label text-start">Usuario:</label>
+								<div class="col-sm-8">
+									<input type="text" th:field="*{username}" class="form-control form-control-sm" />
+									<span id="passwordHelpInline" class="form-text"> Min 6 caracteres ejem.
+										pgomez</span>
+								</div>
+							</div>
+
+							<!-- Contraseña -->
+							<div class="mb-3 row">
+								<label class="col-sm-3 col-form-label text-start">Contraseña:</label>
+								<div class="col-sm-8">
+									<input type="password" th:field="*{password}"
+										class="form-control form-control-sm" />
+									<span id="passwordHelpInline" class="form-text"> 8 caracteres, una mayuscula, una
+										minuscula, un número y un caracter.</span>
+								</div>
+							</div>
+							
+							<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label text-start">Email:</label>
+										<div class="col-sm-8">
+											<input type="email" th:field="*{email}"
+												class="form-control form-control-sm" />
+											<span id="passwordHelpInline" class="form-text"> ejemplo : correo@gmail.com</span>
+									</div>
+							</div>
+
+							<div class="mb-3 row align-items-center">
+								<label class="col-sm-2 col-form-label text-start">Rol:</label>
+
+								<div class="col-sm-6">
+									<div class="d-flex flex-wrap gap-3">
+										<div th:each="rol : ${listaRoles}" class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" th:field="*{role}"
+												th:value="${rol}" th:id="'rol-' + ${rol}" />
+											<label class="form-check-label" th:for="'rol-' + ${rol}">
+												<span th:switch="${rol.name()}">
+													<span th:case="'ROLE_ADMIN'">Administrador</span>
+													<span th:case="'ROLE_USER'">Usuario</span>
+												</span>
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<!-- Estado -->
+								<div class="col-sm-4">
+									<div class="form-check">
+										<input type="checkbox" th:field="*{enabled}" class="form-check-input"
+											id="enabledCheckbox" />
+										<label class="form-check-label ms-2" for="enabledCheckbox">Activo</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- Botón -->
+							<div class="text-center mt-4">
+								<button type="submit"
+									class="btn btn-outline-warning w-50 shadow-sm fw-semibold">Guardar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!-- Imagen -->
+			<div class="col-md-6 text-center">
+				<img src="https://intranet.ai/media/5501/immagini-banner-14.png" alt="Imagen descriptiva"
+					class="img-fluid" style="max-height: 400px; object-fit: cover;">
+			</div>
+
+		</div>
+	</div>
+
+	<footer th:replace="main/layout.html :: footer"></footer>
+</body>
+
+</html>

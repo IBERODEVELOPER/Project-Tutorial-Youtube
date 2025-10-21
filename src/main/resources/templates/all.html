@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="main/layout.html :: head"></head>
+<body>
+<header th:insert="main/layout.html :: header"></header>
+
+	<div class="container full-height">
+			<table class="table table-hover table-bordered">
+				<thead class="bg-dark  text-white">
+					<tr>
+						<th class="col-1">Foto</th>
+						<th>Nombre Completo</th>
+						<th>T. Documento</th>
+						<th>N° Documento</th>
+						<th > Acciones </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item: ${empleados}">
+						<td>
+						   <img th:if="${item.foto != null && #strings.length(item.foto) > 0}" class="img-thumbnail rounded float-left"
+ 							style="max-width: 40%;" th:src="@{'/Web_Fotos/' + ${item.foto}}" th:alt="${item.foto}" />
+						</td>
+						<td th:text="${item.nomCompleto}"></td>
+						<td th:text="${item.tDocumento}"></td>
+						<td th:text="${item.documento}"></td>
+						<td>
+							<a class="btn btn-success btn-xs" th:href="'/form/'+${item.id}" th:text="'Editar'" onclick="confirmarEdicion(event, this)"></a>
+							<a class="btn btn-danger btn-xs" th:href="'/deleteById/'+${item.id}" th:text="'Eliminar'" onclick="confirmarDelete(event, this)"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- Paginador -->
+			<nav th:replace="~{paginator-nav :: paginator}"></nav>
+		</div>
+
+<footer th:replace="main/layout.html :: footer"></footer>
+</body>
+</html>

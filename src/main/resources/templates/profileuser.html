@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="main/layout :: head">
+<!-- FontAwesome para el icono de ojito -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+	<header th:replace="main/layout :: header"></header>
+	<div class="container-fluid" id="pantll">
+		<div class="container d-flex justify-content-between align-items-start">
+			<div class="row card shadow flex-grow-1"
+				style="margin-left: 48px; margin-right: 48px; margin-top: 40px; margin-bottom: 40px; padding-left: 0px; padding-right: 0px; padding-left: 10px; padding-right: 10px">
+				
+				<div class="container rounded bg-white mt-5 mb-5" style="margin-top: 24px !important;">
+					<h4 class="text-capitalize fw-bold" th:text="${titlepage}"></h4>
+					<div class="row">
+						<!-- Columna de la Foto y Formulario de actualización -->
+						<div class="col-md-3 border-right"
+							style="margin-left: 15px; margin-right: 10px; width: 30%; min-height: auto;">
+								<div class="d-flex flex-column align-items-center p-3 py-5 rounded bg-dark bg-gradient">
+									<!-- Muestra cuando la persona tiene foto -->
+									<img id="imgAvatar"
+										th:if="${employee.foto != null and #strings.length(employee.foto) > 0}"
+										class="img-thumbnail rounded float-left"
+										style="max-width: 80%;"
+										th:src="@{'/Web_Fotos/' + ${#authentication.principal.userPhoto}}" th:alt="${employee.foto}" />
+								
+									<span class="text-light font-weight-bold"
+										th:text="${employee.nomCompleto}"></span> <span
+										class=" text-light font-weight-bold"
+										th:text="${user.email}"></span>
+
+								</div>
+						</div>
+						<!-- Columna de Información Personal y Horario -->
+						<div class="col-md-8 mx-auto">
+							<div
+								class="d-flex justify-content-between align-items-center mb-3">
+								<h4 class="text-right text-center"
+									th:text="${'Información personal'}"></h4>
+							</div>
+							<div class="row">
+								<!-- Columna 1 -->
+								<div class="col-md-4 mb-3">
+									<label>Nombre</label><input type="text" class="form-control" th:field="*{employee.nombre}" disabled> 
+									<label>T. Documento</label><input type="text" class="form-control" th:field="*{employee.tDocumento}" disabled>
+								</div>
+								<!-- Columna 2 -->
+								<div class="col-md-4 mb-3">
+									<label>Ap. Paterno </label> <input type="text" class="form-control" th:field="*{employee.apePaterno}"disabled> 
+									<label>N° Documento</label> <input type="text" class="form-control" th:field="*{employee.documento}" disabled>
+								</div>
+								<!-- Columna 3 -->
+								<div class="col-md-4 mb-3">
+									<label>Ap. Materno</label> <input type="text" class="form-control" th:field="*{employee.apeMaterno}"disabled> 
+									<label>Fec. Nacimiento</label> <input type="text" class="form-control" th:field="*{employee.fech_nacimiento}" disabled> 
+									<label>Correo E.</label> <input type="text" class="form-control" th:field="*{user.email}" disabled>
+								</div>
+								<!-- Columna 1 - fila2 -->
+								<div
+									class="d-flex justify-content-between align-items-center mb-3"
+									style="margin-bottom: 4px !important;">
+									<h4 class="text-right text-center"
+										th:text="${'Información de La cuenta'}"></h4>
+								</div>
+								<div class="col-md-4 mb-3">
+									<label>Usuario del Sistema</label> 
+									<input type="text" class="form-control" th:field="*{user.username}" disabled> 
+								</div>
+								<div class="col-md-4 mb-3">
+									<label>Tipo de Permiso</label>
+									<input th:if="${user.getRole().name() != null and user.getRole().name() == 'ROLE_ADMIN'}" type="text" class="form-control" value="Administrador" disabled>
+									<input th:if="${user.getRole().name() != null and user.getRole().name() == 'ROLE_USER'}" type="text" class="form-control" value="Usuario" disabled>
+								</div>
+								<div class="col-md-4 mb-3">
+									<label>Estado</label> 
+									<input th:if="${employee.userEntity == null}" type="text" class="form-control" value="Aun no tiene cuenta" disabled>
+									<input th:if="${employee.userEntity != null and user.enabled == true}" type="text" class="form-control" value="Activo" disabled>
+									<input th:if="${employee.userEntity != null and user.enabled == false}" type="text" class="form-control" value="Inactivo" disabled>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!--PDF-->
+			<div class="col-1 mt-5">
+			       <a th:href="@{/reports/userdpf}"
+			          class="btn btn-outline-danger fw-bold">
+			           <ion-icon name="document-outline"></ion-icon> PDF
+			       </a>
+			</div>
+			<div class="col-1 mt-5">
+						       <a th:href="@{/reports/userxls}"
+						          class="btn bg-success bg-gradient text-white fw-bold">
+						           <ion-icon name="document-outline"></ion-icon> Xlsx
+						       </a>
+			</div>
+		</div>
+	</div>
+	<footer th:replace=" main/layout ::footer"></footer>
+</body>
+</html>

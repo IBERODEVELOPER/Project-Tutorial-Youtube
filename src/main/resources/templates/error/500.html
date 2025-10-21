@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="main/layout.html :: head"></head>
+
+<body>
+	<header th:insert="main/layout.html :: header"></header>
+	<div class="container full-height">
+		<br>
+		<div class="container" align="center">
+			<div class="card" style="width: 30rem;">
+				<h1 style="color:rgb(0, 64, 128)"><strong>Error 500</strong></h1>
+				<h3 style="color:rgb(0, 128, 128)">Ooops.... Parece que algo salió mal.</h3>
+				<img th:src="@{'/images/error.png'}" class="card-img-top" alt="error 500">
+			</div>
+		</div>
+	</div>
+	<footer th:replace="main/layout.html :: footer"></footer>
+</body>
+
+</html>
