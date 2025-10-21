@@ -102,6 +102,8 @@ https://www.youtube.com/watch?v=SccAX0RHgqE
 https://www.youtube.com/watch?v=uE94Ra5AOTw
 
 #30 Update Project - 🧩 Interceptores y control de acceso 👤 con roles en Spring Boot + Thymeleaf
+
+Visita y suscribete al canal de Youtube
 https://www.youtube.com/watch?v=_QQtlYWhZ6A
 
 #31 Update Project - ⬇️ Exportar Datos de Usuario 👩‍💻 a PDF 📄 en Spring Boot con OpenPDF
